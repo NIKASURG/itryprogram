@@ -151,7 +151,7 @@
     <button onclick="siustiPranesima()">Siųsti</button>
 
     <script>
-        const socket = new WebSocket('https://nikasurg.github.io/Mods');
+        const socket = new WebSocket('ws://nikasurg.github.io/Mods');
 
         socket.onopen = () => {
             console.log('Prisijungta prie serverio.');
