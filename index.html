@@ -10,7 +10,7 @@
     <button onclick="siustiPranesima()">Siųsti</button>
 
     <script>
-        const socket = new WebSocket('ws://mods-xi.vercel.app');
+        const socket = new WebSocket('wss://mods-xi.vercel.app');
 
         socket.onopen = () => {
             console.log('Prisijungta prie serverio.');
