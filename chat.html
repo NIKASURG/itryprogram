@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebSocket pavyzdys</title>
+</head>
+
+<body>
+    <input type="text" id="inputField" placeholder="Įveskite tekstą">
+    <button onclick="siustiPranesima()">Siųsti</button>
+
+    <script>
+        const socket = new WebSocket('ws://mods-xi.vercel.app/chat');
+
+        socket.onopen = () => {
+            console.log('Prisijungta prie serverio.');
+        };
+
+        socket.onmessage = (event) => {
+            const receivedMessage = event.data;
+            console.log('Gautas pranešimas iš serverio:', receivedMessage);
+            // Čia galite įgyvendinti logiką, kad atnaujintumėte tekstą svetainės puslapyje
+        };
+
+        socket.onclose = () => {
+            console.log('Atsijungta nuo serverio.');
+        };
+
+        function siustiPranesima() {
+            const inputField = document.getElementById('inputField');
+            const message = inputField.value;
+
+            socket.send(message);
+        }
+    </script>
+</body>
+
+</html>
