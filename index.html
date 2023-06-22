@@ -1,14 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veike</title>
+    <title>WebSocket pavyzdys</title>
 </head>
 
 <body>
-    <h1>Aš gyvas!!!</h1>
+    <input type="text" id="inputField" placeholder="Įveskite tekstą">
+    <button onclick="siustiPranesima()">Siųsti</button>
+
+    <script>
+        const socket = new WebSocket('ws://mods-xi.vercel.app');
+
+        socket.onopen = () => {
+            console.log('Prisijungta prie serverio.');
+        };
+
+        socket.onmessage = (event) => {
+            const receivedMessage = event.data;
+            console.log('Gautas pranešimas iš serverio:', receivedMessage);
+            // Čia galite įgyvendinti logiką, kad atnaujintumėte tekstą svetainės puslapyje
+        };
+
+        socket.onclose = () => {
+            console.log('Atsijungta nuo serverio.');
+        };
+
+        function siustiPranesima() {
+            const inputField = document.getElementById('inputField');
+            const message = inputField.value;
+
+            socket.send(message);
+        }
+    </script>
 </body>
 
 </html>
