@@ -1,37 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>WebSocket pavyzdys</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modintas serveris</title>
+    <style>
+        button {
+            --c: #229091;
+            /* the color*/
+            box-shadow: 0 0 0 .1em inset var(--c);
+            --_g: linear-gradient(var(--c) 0 0) no-repeat;
+            background: var(--_g) calc(var(--_p, 0%) - 100%) 0%, var(--_g) calc(200% - var(--_p, 0%)) 0%, var(--_g) calc(var(--_p, 0%) - 100%) 100%, var(--_g) calc(200% - var(--_p, 0%)) 100%;
+            background-size: 50.5% calc(var(--_p, 0%)/2 + .5%);
+            outline-offset: .1em;
+            transition: background-size .4s, background-position 0s .4s;
+        }
+        
+        button:hover {
+            --_p: 100%;
+            transition: background-position .4s, background-size 0s;
+        }
+        
+        button:active {
+            box-shadow: 0 0 9e9q inset #0009;
+            background-color: var(--c);
+            color: #fff;
+        }
+        
+        body {
+            place-content: center;
+            grid-auto-flow: column;
+            gap: 40px;
+            background: #F2DCA2;
+        }
+        
+        button {
+            font-family: system-ui, sans-serif;
+            font-size: 2.5rem;
+            cursor: pointer;
+            padding: .1em .6em;
+            font-weight: bold;
+            border: none;
+        }
+        
+        p {
+            font-family: system-ui, sans-serif;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: .1em .6em;
+            font-weight: bold;
+            border: none;
+        }
+        
+        .slideshow {
+            position: relative;
+            width: 80%;
+            padding-bottom: 50%;
+            overflow: hidden;
+        }
+        
+        .slideshow img {
+            position: absolute;
+            left: 0;
+            width: 70%;
+            height: 70%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .slideshow img.active {
+            opacity: 1;
+        }
+        
+        div {
+            top: -700px;
+            left: 45%;
+        }
+    </style>
 </head>
 
 <body>
-    <input type="text" id="inputField" placeholder="Įveskite tekstą">
-    <button onclick="siustiPranesima()">Siųsti</button>
+    <div>
+        <h1>Tai mods skirti prisijungti į
+
+        </h1>
+        <h2>game6.falixserver.net:20375</h2>
+
+        <button onclick="document.getElementById('link').click()">Atsisiųsti mods paketa</button>
+        <p>jeigu siunčiates mods paketa createXP NEREIKALINGAS </p>
+        <button onclick="document.getElementById('cretexp').click()">CreateXp</button>
+        <a id="cretexp" href="createXP.jar" download hidden></a>
+        <a id="link" href="serveriomods.zip" download hidden></a>
+        <p>Serveryje naudojamas forge 19.2</p>
+        <a href="https://files.minecraftforge.net/net/minecraftforge/forge/index_1.19.2.html">
+            <button>FORGE 19.2 link</button>
+        </a>
+
+        <p>priemu tik pažystamus, kolkas</p>
+
+        <a href="https://falixnodes.net/start">
+            <button id="dizinasm">Serverio įjungimas</button>
+        </a>
+        <p>Mods dėl pildymo galima siūlyti</p>
+        <a href="https://discord.gg/kmdZSF4jKa">
+            <button id="dizinasm">Discord</button>
+        </a>
+        <div class="slideshow">
+            <img src="chery.png" alt="Nuotrauka 1">
+            <img src="pušys.png" alt="Nuotrauka 2">
+            <img src="džiungles.png" alt="Nuotrauka 3">
+            <img src="medžiai.png" alt="Nuotrauka 4">
+            <img src="tamsu.png" alt="Nuotrauka 5">
+        </div>
+    </div>
 
     <script>
-        const socket = new WebSocket('wss://mods-nikasurg.vercel.app');
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var images = document.querySelectorAll(".slideshow img");
+            var index = 0;
 
-        socket.onopen = () => {
-            console.log('Prisijungta prie serverio.');
-        };
+            setInterval(kartoti(), 500);
 
-        socket.onmessage = (event) => {
-            const receivedMessage = event.data;
-            console.log('Gautas pranešimas iš serverio:', receivedMessage);
-            // Čia galite įgyvendinti logiką, kad atnaujintumėte tekstą svetainės puslapyje
-        };
-
-        socket.onclose = () => {
-            console.log('Atsijungta nuo serverio.');
-        };
-
-        function siustiPranesima() {
-            const inputField = document.getElementById('inputField');
-            const message = inputField.value;
-
-            socket.send(message);
-        }
+            function kartoti() {
+                images[index].classList.remove("active");
+                index = (index + 1) % images.length;
+                images[index].classList.add("active");
+            }
+            setInterval(function() {
+                images[index].classList.remove("active");
+                index = (index + 1) % images.length;
+                images[index].classList.add("active");
+            }, 4000)
+        });
+        kartoti()
     </script>
 </body>
 
