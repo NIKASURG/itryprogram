@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skaicius skaiciotuvas
+    </title>
+</head>
+<p id="tekstas">skaicus</p>
+<input id="skaicius" value="85" ></input>
+<input  id='kitasSkaicius' value="28"></input>
+
+<body>
+    <script>
+        tekstas = document.getElementById('tekstas')
+        skaicius = document.getElementById('skaicius')
+        kitasSkaicus = document.getElementById('kitasSkaicius')
+        
+        skaicius.onchange = function() {naujesrez()};
+        kitasSkaicus.onchange = function() {naujesrez()};
+        document.addEventListener("keyup", naujesrez());
+        function naujesrez(){
+        let skaciusPirmas = skaicius.value * 1
+        let skaicuskiek = kitasSkaicus.value * 1
+        let rezautatas = 0
+        for (let i = 1; i < skaicuskiek + 1; i++) {
+            rezautatas += i * skaciusPirmas
+            console.log(rezautatas, i)
+        }
+        tekstas.innerHTML = rezautatas
+    }
+        naujesrez()
+    </script>
+</body>
+</html>
